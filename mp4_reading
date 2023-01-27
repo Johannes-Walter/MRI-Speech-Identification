@@ -1,0 +1,20 @@
+import pandas as pd
+import numpy as np
+import cv2
+
+#replace vpath with ur path to the viceo
+vpath = 'C:/Users/GMDYG/OneDrive - Bayer/Personal Data/dhbw/moodle/5. Semester/NLP/GitHub/nlp/sub001/2drt/video/sub001_2drt_01_vcv1_r1_video.mp4'
+video = cv2.VideoCapture(vpath)
+
+while True:
+    ret, frame = video.read()
+    if not ret: break # break if no next frame
+    
+    cv2.imshow('video',frame) # show frame
+    
+    if cv2.waitKey(1) & 0xFF == ord('q'): # on press of q break
+        break
+        
+# release and destroy windows
+video.release()
+cv2.destroyAllWindows()
