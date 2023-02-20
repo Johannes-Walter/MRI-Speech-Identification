@@ -1,3 +1,6 @@
 /MRI_dataset.h5
 /video.gif
-/data/*
+/output/*
+/data/*/2drt/*
+/data/*/3d/*
+/data/*/t2w/*
