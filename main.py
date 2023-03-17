@@ -1,8 +1,17 @@
 import h5py
 import matplotlib.pyplot as plt
 
-f = h5py.File("MRI_dataset.h5", "r")
-dset = f["recon"]
+f = h5py.File("0.h5", "r")
+print(f.keys())
+# dset = f["recon"]
+dset = f["LI_CT"]
+
+plt.imshow(dset, cmap="gray")
+plt.show()
+
+import sys
+sys.exit()
+
 timespan = f["lambda_t"][0][0] * 100
 
 
