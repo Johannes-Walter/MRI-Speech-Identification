@@ -4,4 +4,4 @@
 /data/sub001/2drt/*
 /data/*/3d/*
 /data/*/t2w/*
-!/data/sub001/2drt/recon/sub001_2drt_07_grandfather1_r1_recon.7z
+!/data/sub001/2drt/recon/*.zip
