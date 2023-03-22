@@ -10,7 +10,7 @@ class Vectorizer:
     VECTOR_COUNT = 7
 
     VECTOR_SPAN_DEGREES = 180
-    ROTATION_OFFSET_DEGREES = -180
+    ROTATION_OFFSET_DEGREES = 180
 
     X_OFFSET = 40
     Y_OFFSET = 40
@@ -30,14 +30,14 @@ class Vectorizer:
     
 
     def get_randomized_vectors(self, max_offset = 4, max_rotation = 10):
-        relative = self.__get_vectors_relative_position(max_rotation)
-        absolute = self.__get_vectors_absolute_position(relative, max_offset)
+        relative = self.get_vectors_relative_position(max_rotation)
+        absolute = self.get_vectors_absolute_position(relative, max_offset)
 
         vectors = list()
         letters = list()
         for idx, row in self.timestamps.iterrows():
             vectors.append(
-                self.__get_pixel_data(
+                self.get_pixel_data(
                     absolute,
                     int(row["first_frame"]),
                     int(row["last_frame"])
@@ -47,7 +47,7 @@ class Vectorizer:
         return vectors, letters
 
 
-    def __get_pixel_data(self, vector_positions: np.array, first_frame: int, last_frame: int):
+    def get_pixel_data(self, vector_positions: np.array, first_frame: int, last_frame: int):
         total_frames = last_frame - first_frame
         frames = self.frames[first_frame:last_frame]
 
@@ -65,7 +65,7 @@ class Vectorizer:
         return vectors
 
 
-    def __get_mask(self, vectors_absolute_position):
+    def get_mask(self, vectors_absolute_position):
         vector_mask = np.ones((self.IMAGE_SIZE, self.IMAGE_SIZE))
         for vector in vectors_absolute_position:
             for x, y in vector:
@@ -75,14 +75,14 @@ class Vectorizer:
         return vector_mask
     
 
-    def __get_vectors_absolute_position(self, realative_vector_positions: np.ndarray, max_offset):
+    def get_vectors_absolute_position(self, realative_vector_positions: np.ndarray, max_offset):
         vectors = realative_vector_positions.copy()
         vectors[...,1] += int(self.X_OFFSET - self.rng.random() * 2*max_offset - max_offset)
         vectors[...,0] += int(self.Y_OFFSET - self.rng.random() * 2*max_offset - max_offset)
         return vectors
 
 
-    def __get_vectors_relative_position(self, max_rotation):
+    def get_vectors_relative_position(self, max_rotation):
 
         vector_count = self.VECTOR_COUNT
         vector_length = self.VECTOR_LENGTH
@@ -95,9 +95,9 @@ class Vectorizer:
 
         for i, vector in enumerate(vectors):
             for j in range(vector_length):
-                rotation = vector_spacing_degrees*i+self.ROTATION_OFFSET_DEGREES+rotation_offset_degrees
+                rotation = vector_spacing_degrees*i+rotation_offset_degrees
 
-                x, y = self.__get_offsets(rotation, j)
+                x, y = self.get_offsets(rotation, j)
                 vector[j][0] = x
                 vector[j][1] = y
 
@@ -105,7 +105,7 @@ class Vectorizer:
     
 
     @staticmethod
-    def __get_offsets(rotation: float, distance: int):
+    def get_offsets(rotation: float, distance: int):
         rad = math.radians(rotation)
         
         x = math.sin(rad) * distance
