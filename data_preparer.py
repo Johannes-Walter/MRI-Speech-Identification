@@ -63,5 +63,14 @@ def make_numpy(vectors, length: int):
         new_vectors[idx, :, :, :vector.shape[-1]] = vector.copy()
         
     return np.reshape(new_vectors, (len(vectors), 7, 20*length))
+    #return new_vectors
+
+def make_numpy_cnn(vectors, length: int):
+    shape = (len(vectors), 7, 20, length)
+    new_vectors = np.zeros(shape)
+    for idx, vector in enumerate(vectors):
+        new_vectors[idx, :, :, :vector.shape[-1]] = vector.copy()
+        
+    #return np.reshape(new_vectors, (len(vectors), 7, 20*length))
     return new_vectors
 
